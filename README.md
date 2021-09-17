@@ -11,7 +11,7 @@ Dette lager mappa build, hvor programmet ligger i libs/app-1.0.jar.
 ### Beskrivelse av bruk:
 * Åpne program ved å dobbeltklikke på app-1.0.jar
 * Åpne xlsc-fil fra plateleser
-** Sample angis som "prøvenummer,år ekstraktID" eks: "900,45 55663"
+** Sample angis som "år_prøvenummer_ekstraktID" eks: "2021_1958_19794"
 * Output-fil lagres der programmet åpnes fra (altså build/libs/ hvis du åpner programmet derfra)
 ** Output er en fil med 8 kolonner, navn blir satt fra sessionID i resultatfil:
 ** Brønn, prøvenumer, år, ekstraktID, kons,	ratio, brukernavn, dagens dato

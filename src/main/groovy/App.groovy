@@ -39,18 +39,18 @@ def parseXLtoList = {sheet, count, sessionID ->
     def tempstr = []
     while (sheet.getRow(count) != null) {
         sId = sheet.getRow(count).getCell(3).toString()
-        if (sId.contains(',')) {
-        sample = sId.tokenize(',')[0]
-        year = "20" + sId.tokenize(',')[1].tokenize(' ')[0]
-        extrID = sId.tokenize(' ')[1]
-        userID = sessionID.tokenize('_')[-1]
+        if (sId.contains('_')) {
+            sample = sId.tokenize('_')[1]
+            year = sId.tokenize('_')[0]
+            extrID = sId.tokenize('_')[2]
+            userID = sessionID.tokenize('_')[-1]
+            
+            def sdf = new SimpleDateFormat("dd.MM.yyyy")
+            def date = sdf.format(new Date())
+            
         
-        def sdf = new SimpleDateFormat("dd.MM.yyyy")
-        def date = sdf.format(new Date())
-        
-       
-        tempstr = [sheet.getRow(count).getCell(1).toString(), sample, year, extrID,  sheet.getRow(count).getCell(12).toString().replace('.', ','), sheet.getRow(count).getCell(16).toString().replace('.', ','), userID, date];
-        output.add(tempstr)
+            tempstr = [sheet.getRow(count).getCell(1).toString(), sample, year, extrID,  sheet.getRow(count).getCell(12).toString().replace('.', ','), sheet.getRow(count).getCell(16).toString().replace('.', ','), userID, date];
+            output.add(tempstr)
         }
     count += 1;
     }
@@ -112,8 +112,7 @@ def OpenReport = { text ->
 // GUI:
 def myapp = new SwingBuilder()
 
-def process = {
-    
+def process = {   
     // Hente rapport-fil:
     def report = OpenReport.call("Velg rapport")
     
@@ -125,8 +124,6 @@ def process = {
     result_summary = getSheet(wb, "Result summary")
     addToResultsFiles(result_summary, sessionID)
     JOptionPane.showMessageDialog(null, "Ferdig!!");
-    
-    
 }
 
 
@@ -155,37 +152,3 @@ def myframe = myapp.frame(title : 'Plateleser rapportverktøy v0.1', location : 
 myframe.setVisible(true)
 
 
-/*  
-    Dette er fra da alt skulle inn i en samlefil. Nå skrives i stedet alt til en fil etter hver kjøring.
-    
-    else { // Write the control and blank to the kontrol_blank-file
-            row = c_sheet.createRow(c_lastnum);
-            it.eachWithIndex {itt, index2 ->
-                c_cell = row.createCell(index2);
-                c_cell.setCellValue(itt.toString());
-            }
-            c_lastnum += 1;
-        }  
-
-
-
-        // Finn første rad som er tom
-    def lastnum = sheet.getLastRowNum() + 1
-    def c_lastnum = c_sheet.getLastRowNum() + 1
-    
-    
-    FileInputStream inputStream = new FileInputStream(new File("resultater_plateleser.xlsx"));
-    Workbook workbook = WorkbookFactory.create(inputStream);
-    Sheet sheet = workbook.getSheetAt(0);
-    Cell cell = null; // declare a Cell object
-    // Control and blank:
-    FileInputStream c_inputStream = new FileInputStream(new File("kontroll_blank_log.xlsx"));
-    Workbook c_workbook = WorkbookFactory.create(c_inputStream);
-    Sheet c_sheet = c_workbook.getSheetAt(0);
-    Cell c_cell = null; // declare a Cell object
-
-
-    // CLose the streams:
-    inputStream.close();
-    c_inputStream.close();
-*/ 
