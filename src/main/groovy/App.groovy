@@ -48,8 +48,7 @@ def parseXLtoList = {sheet, count, sessionID ->
             def sdf = new SimpleDateFormat("dd.MM.yyyy")
             def date = sdf.format(new Date())
             
-        
-            tempstr = [sheet.getRow(count).getCell(1).toString(), sample, year, extrID,  sheet.getRow(count).getCell(12).toString().replace('.', ','), sheet.getRow(count).getCell(16).toString().replace('.', ','), userID, date];
+            tempstr = [sheet.getRow(count).getCell(1).toString(), year, sample, extrID, date, userID, sheet.getRow(count).getCell(12).toString().replace('.', ','), sheet.getRow(count).getCell(16).toString().replace('.', ',')  ];
             output.add(tempstr)
         }
     count += 1;
